@@ -3,6 +3,7 @@ import { authMiddleware } from "./middleware";
 import express from "express"
 import { JWT_SECRET } from "@repo/backend-common/config"
 import { signUpSchema, signInSchema } from "@repo/common/schema"
+import { prismaClient } from "@repo/db/prisma"
 
 const app = express(); 
 
