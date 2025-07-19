@@ -1,6 +1,6 @@
 {
-  "name": "excalidraw",
-  "private": true,
+  "name": "@habibsheikh/tbrepo",
+  "private": false,
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
