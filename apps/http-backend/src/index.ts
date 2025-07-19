@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import { authMiddleware } from "./middleware";
 import express from "express"
 import { JWT_SECRET } from "@repo/backend-common/config"
-import { signUpSchema, signInSchema } from "@repo/common/schema"
+import { signUpSchema, signInSchema, createRoomSchema } from "@repo/common/schema"
 import { prismaClient } from "@repo/db/prisma"
 import bcrypt from "bcrypt"
 
@@ -115,9 +115,25 @@ app.post('/signin', async (req: any, res: any) => {
     })
 })
 
-app.post('/room', authMiddleware, (req: any, res: any) => {
+app.post('/room', authMiddleware, async (req: any, res: any) => {
+    const { success } = createRoomSchema.safeParse(req.body)
+    if(!success) {
+        res.json({
+            message: "Incorrect Inputs"
+        })
+        return
+    }
+    const userId = req.userId
+
+    const room = await prismaClient.room.create({
+        data: {
+            slug: req.body.slug,
+            adminId: userId
+        }
+    })
+
     res.json({
-        roomId: 123
+        roomId: room.id
     })
 })
 
