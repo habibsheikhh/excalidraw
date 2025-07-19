@@ -1,16 +1,13 @@
 import jwt from "jsonwebtoken";
 import { authMiddleware } from "./middleware";
-import { z } from "zod"
-const express = require('express');
+import express from "express"
+import { JWT_SECRET } from "@repo/backend-common/config"
+import { signUpSchema, signInSchema } from "@repo/common/schema"
 
-const app = express();
+const app = express(); 
 
 app.use(express.json())
-const signUpSchema = z.object({
-    username: z.string(),
-    email: z.email(),
-    password: z.string()
-})
+
 app.post('/signup', (req: any, res: any) => {
     const { username, email, password} = req.body
     const { success } = signUpSchema.safeParse({
@@ -18,9 +15,12 @@ app.post('/signup', (req: any, res: any) => {
         email,
         password
     })
-    if(!success) res.json({
-        message: "Invalid Inputs"
-    })
+    if(!success) {
+        res.json({
+            message: "Invalid Inputs"
+        })
+        return
+    }
     // Do db logic here
     // Check wheater the email is unique.
     // If yes, add user to db
@@ -28,16 +28,12 @@ app.post('/signup', (req: any, res: any) => {
     const userId = 1
     const token = jwt.sign({
         userId
-    }, process.env.JWT_SECRET || "")
+    }, JWT_SECRET)
     res.json({
         token
     })
 })
 
-const signInSchema = z.object({
-    username: z.string(),
-    password: z.string()
-})
 
 app.post('/signin', (req: any, res: any) => {
     const { username, password} = req.body
@@ -54,7 +50,7 @@ app.post('/signin', (req: any, res: any) => {
     const userId = 1
     const token = jwt.sign({
         userId
-    },process.env.JWT_SECRET || "")
+    },JWT_SECRET)
     res.json({
         token
     })
