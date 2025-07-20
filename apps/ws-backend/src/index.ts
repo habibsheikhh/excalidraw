@@ -56,7 +56,7 @@ wss.on('connection', (ws, request) => {
     else if(parsedData.type === "leave_room") {
       const user = users.find(x => x.ws === ws)
       if(!user) return
-      user?.rooms.filter(x => x != parsedData.room)
+      user?.rooms.filter(x => x != parsedData.roomId)
     }
 
     if(parsedData.type === "chat") {
