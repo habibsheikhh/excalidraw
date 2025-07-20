@@ -115,6 +115,7 @@ app.post('/signin', async (req: any, res: any) => {
     })
 })
 
+// Create a New Room
 app.post('/room', authMiddleware, async (req: any, res: any) => {
     const { success } = createRoomSchema.safeParse(req.body)
     if(!success) {
@@ -137,6 +138,7 @@ app.post('/room', authMiddleware, async (req: any, res: any) => {
     })
 })
 
+// Get upto recent 50 message of a Room
 app.get('/chats/:roomId', async (req, res) => {
     try {
         const roomId = Number(req.params.roomId)
@@ -157,6 +159,7 @@ app.get('/chats/:roomId', async (req, res) => {
     }
 })
 
+// Given slug => returns roomd
 app.get('/room/:slug', async (req, res) => {
     try {
         const slug = req.params.slug
@@ -173,6 +176,6 @@ app.get('/room/:slug', async (req, res) => {
     }
 })
 
-app.listen(3000, () => {
-  console.log('Server is running on http://localhost:3000');
+app.listen(3001, () => {
+  console.log('Server is running on http://localhost:3001');
 });
