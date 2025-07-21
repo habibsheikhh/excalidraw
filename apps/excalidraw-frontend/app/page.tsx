@@ -1,9 +1,8 @@
 
 "use client";
 
-import { useState } from "react";
 import { Button } from "@repo/ui/button";
-import { Badge } from "@repo/ui/badge";
+
 import { 
   Pencil, 
   Users, 
@@ -74,7 +73,7 @@ export default function Home() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href={"/signup"}>
-              <Button size="lg" className="bg-white hover:bg-gray-100 text-black px-8 py-6 text-lg font-semibold">
+              <Button size="lg" className="bg-green-400 hover:bg-gray-100 text-black px-8 py-6 text-lg font-semibold">
                 Sign Up
               </Button>
             </Link>

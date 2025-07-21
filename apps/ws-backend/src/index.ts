@@ -48,7 +48,13 @@ wss.on('connection', (ws, request) => {
     ws
   })
   ws.on('message', async function message(data) {
-    const parsedData = JSON.parse(data as unknown as string)
+    let parsedData;
+    if(typeof data !== 'string'){
+      parsedData = JSON.parse(data.toString())
+    }else {
+      parsedData = JSON.parse(data)
+    }
+    console.log(parsedData);
     if(parsedData.type === "join_room") {
       const user = users.find(x => x.ws === ws)
       user?.rooms.push(parsedData.roomId)
@@ -66,7 +72,7 @@ wss.on('connection', (ws, request) => {
       try {
         await prismaClient.chat.create({
           data: {
-            roomId,
+            roomId: Number(roomId),
             message,
             userId
           }
@@ -83,6 +89,7 @@ wss.on('connection', (ws, request) => {
         })
       }
       catch (e) {
+        console.error("Error saving chat message:", e);
         console.log("Something's up!!")
       }
     }
