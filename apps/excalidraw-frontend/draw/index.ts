@@ -18,6 +18,13 @@ type Shapes = {
   startY: number;
   endX: number;
   endY: number;
+}| {
+  type: "text",
+  text: string,
+  x: number,
+  y: number,
+  font?: string,
+  color?: string
 }
 export async function initDraw(canvas: HTMLCanvasElement, roomId: string, socket: WebSocket) {
   let existingShapes: Shapes[] = await getExistingShapes(roomId);
@@ -78,6 +85,19 @@ export async function initDraw(canvas: HTMLCanvasElement, roomId: string, socket
         //centerY: startY + radius
       }
     } 
+    else if (selectedTool === "pencil") {
+      const endX = startX + width;
+      const endY = startY + height;
+
+      shape = {
+        //@ts-ignore
+        type: window.selectedTool,
+        startX,
+        startY,
+        endX,
+        endY,
+      };
+    }
 
     if(!shape){
       return
@@ -113,6 +133,19 @@ export async function initDraw(canvas: HTMLCanvasElement, roomId: string, socket
         ctx.stroke()
         ctx.closePath()
       }
+      else if (selectedTool === "pencil") {
+        const endX = startX + width;
+        const endY = startY + height;
+        ctx.strokeStyle = "rgb(255, 255, 255)";
+        ctx.lineJoin = "round";
+        ctx.lineWidth = 5;
+
+        ctx.beginPath();
+        ctx.moveTo(startX, startY);
+        ctx.lineTo(endX, endY);
+        ctx.stroke();
+        ctx.closePath();
+      }
     }
   });
 }
@@ -133,6 +166,23 @@ function clearCanvas(existingShapes: Shapes[], canvas: HTMLCanvasElement, ctx: C
         ctx.stroke()
         ctx.closePath()
       }
+      else if (shape.type === "pencil") {
+        ctx.strokeStyle = "rgb(255, 255, 255)";
+        ctx.lineJoin = "round";
+        ctx.lineWidth = 5;
+
+        ctx.beginPath();
+        ctx.moveTo(shape.startX, shape.startY);
+        ctx.lineTo(shape.endX, shape.endY);
+        ctx.stroke();
+        ctx.closePath();
+      }
+      else if (shape.type === "text") {
+        ctx.font = shape.font || "20px Arial";
+        ctx.fillStyle = shape.color || "#ffffff";
+        ctx.fillText(shape.text, shape.x, shape.y);
+      }
+
     })
 }
 
