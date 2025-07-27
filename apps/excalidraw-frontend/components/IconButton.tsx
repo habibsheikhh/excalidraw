@@ -10,7 +10,7 @@ export function IconButton({
     activated?: boolean;
 }) {
     return (
-        <div className={`pointer rounded-full ${activated ? 'text-red-400' : 'text-white'} border-2 p-2 hover:bg-gray-800`} onClick={onClick}>
+        <div className={`pointer rounded-full ${activated ? 'text-red-400' : 'text-black'} border-2 p-2`} onClick={onClick}>
             {icon}
         </div>
     );

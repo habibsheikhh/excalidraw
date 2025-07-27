@@ -1,124 +1,85 @@
+// app/page.tsx (if using App Router)
+// or pages/index.js (if using Pages Router)
+'use client'; // Only needed if using App Router and planning to add interactivity
 
-"use client";
+import React from "react";
 
-import { Button } from "@repo/ui/button";
-
-import { 
-  Pencil, 
-  Users, 
-  Cloud, 
-  Zap, 
-  Github, 
-  Play,
-  Star,
-  Download
-} from "lucide-react";
-
-import Link from "next/link";
-
-export default function Home() {
+export default function LandingPage() {
   return (
-    <div className="h-screen bg-black relative overflow-hidden">
-      {/* Floating Geometric Shapes */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-10 left-10 w-4 h-4 border-2 border-gray-600 rotate-45 animate-pulse" />
-        <div className="absolute top-20 right-20 w-6 h-6 border-2 border-gray-500 rounded-full animate-bounce" />
-        <div className="absolute top-40 left-1/4 w-8 h-8 border-2 border-gray-600 transform rotate-12 animate-spin-slow" />
-        <div className="absolute bottom-20 right-10 w-5 h-5 bg-gray-700 transform rotate-45 animate-pulse" />
-        <div className="absolute bottom-40 left-20 w-6 h-6 border-2 border-gray-600 transform rotate-12" />
-        <div className="absolute top-1/2 right-1/4 w-4 h-4 bg-gray-600 rounded-full animate-bounce" />
-        <div className="absolute top-60 left-1/3 w-7 h-7 border-2 border-gray-500 rounded-full" />
-        <div className="absolute bottom-60 right-1/3 w-5 h-5 border-2 border-gray-600 transform -rotate-12" />
-        <div className="absolute top-32 right-1/2 w-3 h-3 border border-gray-600 rotate-45" />
-        <div className="absolute bottom-32 left-1/2 w-6 h-6 border-2 border-gray-500 transform rotate-45" />
-        <div className="absolute top-1/3 left-10 w-4 h-4 bg-gray-700 rounded-full" />
-        <div className="absolute bottom-1/3 right-20 w-5 h-5 border border-gray-600 transform -rotate-45" />
-      </div>
+    <main className="bg-gray-900 text-white">
+      {/* Navbar */}
+      <nav className="fixed top-0 left-0 right-0 bg-gray-800 px-6 py-4 flex justify-between items-center z-50 shadow-lg">
+        <div className="text-2xl font-bold">MyLogo</div>
+        <ul className="hidden md:flex space-x-6">
+          <li><a href="#" className="hover:text-indigo-400">Home</a></li>
+          <li><a href="#features" className="hover:text-indigo-400">Features</a></li>
+          <li><a href="#about" className="hover:text-indigo-400">About</a></li>
+          <li><a href="#contact" className="hover:text-indigo-400">Contact</a></li>
+        </ul>
+      </nav>
 
-      {/* Header */}
-      <header className="relative z-10 px-6 py-4">
-        <nav className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
-              <Pencil className="w-5 h-5 text-black" />
+      {/* Hero Section */}
+      <section className="min-h-screen flex items-center justify-center text-center px-6 pt-28">
+        <div>
+          <h1 className="text-4xl md:text-6xl font-bold mb-4">Welcome to Our Product</h1>
+          <p className="text-lg md:text-xl mb-6 text-gray-300">We build tools that empower your business.</p>
+          <button className="bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-xl shadow">Get Started</button>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section id="features" className="py-20 px-6 bg-gray-800">
+        <h2 className="text-3xl font-bold text-center mb-12">Features</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {[
+            { title: "Fast", description: "Experience lightning-fast performance." },
+            { title: "Secure", description: "Top-notch security for your data." },
+            { title: "Responsive", description: "Looks great on all devices." },
+            { title: "Support", description: "24/7 customer support." },
+          ].map((feature, index) => (
+            <div key={index} className="bg-gray-700 p-6 rounded-xl shadow">
+              <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
+              <p className="text-gray-300">{feature.description}</p>
             </div>
-            <span className="text-2xl font-bold text-white">ExcaliDraw</span>
-          </div>
-          
-          <div className="hidden md:flex items-center space-x-6">
-            <a href="#features" className="text-gray-400 hover:text-white transition-colors">Features</a>
-            <a href="#pricing" className="text-gray-400 hover:text-white transition-colors">Pricing</a>
-            <a href="#docs" className="text-gray-400 hover:text-white transition-colors">Docs</a>
-            
-          </div>
-        </nav>
-      </header>
+          ))}
+        </div>
+      </section>
 
-      {/* Main Content - Centered Lower */}
-      <main className="relative z-10 flex items-center justify-center h-full px-6 -mt-32">
-        <div className="max-w-4xl mx-auto text-center space-y-8">
-          {/* Hero Content */}
-          <div className="space-y-6">
-            <h1 className="text-6xl lg:text-7xl font-bold text-white leading-tight">
-              Virtual whiteboard
-              <span className="block text-gray-400">
-                for sketching
-              </span>
-            </h1>
-            <p className="text-xl text-gray-400 leading-relaxed max-w-2xl mx-auto">
-              Collaborative diagramming made simple. Create beautiful hand-drawn like diagrams, 
-              wireframes, and sketches for your ideas.
+      {/* About Section */}
+      <section id="about" className="py-20 px-6">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <img src="https://via.placeholder.com/500x300" alt="About" className="rounded-xl shadow" />
+          <div>
+            <h2 className="text-3xl font-bold mb-4">About Us</h2>
+            <p className="text-gray-300">
+              We are a team of dedicated developers and designers who believe in creating simple, elegant, and powerful digital experiences. Our mission is to make the web better.
             </p>
           </div>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href={"/signup"}>
-              <Button size="lg" className="bg-green-400 hover:bg-gray-100 text-black px-8 py-6 text-lg font-semibold">
-                Sign Up
-              </Button>
-            </Link>
-            <Link href={"/signin"}>
-              <Button variant="outline" size="lg" className="border-gray-600 text-gray-300 hover:bg-gray-800 px-8 py-6 text-lg">
-                Sign In
-              </Button>
-            </Link>
-          </div>
-
-          <div className="flex items-center justify-center space-x-8 text-sm text-gray-500">
-            <div className="flex items-center space-x-2">
-              <Star className="w-4 h-4 text-gray-400" />
-              <span>Open Source</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Users className="w-4 h-4 text-gray-400" />
-              <span>Real-time Collaboration</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Cloud className="w-4 h-4 text-gray-400" />
-              <span>Auto-save</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Zap className="w-4 h-4 text-gray-400" />
-              <span>Lightning Fast</span>
-            </div>
-          </div>
-
         </div>
-      </main>
+      </section>
 
-      <style jsx global>{`
-        @keyframes spin-slow {
-          from {
-            transform: rotate(0deg);
-          }
-          to {
-            transform: rotate(360deg);
-          }
-        }
-        .animate-spin-slow {
-          animation: spin-slow 4s linear infinite;
-        }
-      `}</style>
-    </div>
+      {/* Contact Section */}
+      <section id="contact" className="py-20 px-6 bg-gray-800">
+        <h2 className="text-3xl font-bold text-center mb-12">Contact Us</h2>
+        <div className="max-w-2xl mx-auto">
+          <form className="space-y-6">
+            <input type="text" placeholder="Name" className="w-full p-4 rounded-xl bg-gray-700 text-white focus:outline-none" />
+            <input type="email" placeholder="Email" className="w-full p-4 rounded-xl bg-gray-700 text-white focus:outline-none" />
+            <textarea placeholder="Message" rows={5} className="w-full p-4 rounded-xl bg-gray-700 text-white focus:outline-none"></textarea>
+            <button type="submit" className="bg-indigo-600 hover:bg-indigo-500 px-6 py-3 rounded-xl text-white shadow">Send Message</button>
+          </form>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-gray-900 text-gray-400 py-6 text-center border-t border-gray-700">
+        <p>&copy; 2025 MyCompany. All rights reserved.</p>
+        <div className="flex justify-center space-x-6 mt-4">
+          <a href="#" className="hover:text-white">Twitter</a>
+          <a href="#" className="hover:text-white">LinkedIn</a>
+          <a href="#" className="hover:text-white">GitHub</a>
+        </div>
+      </footer>
+    </main>
   );
 }
